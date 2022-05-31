@@ -47,6 +47,14 @@ wall.goto(220, -230)
 wall.pendown()
 wall.goto(130, -320)
 
+#launcher
+block = t.Turtle()
+block.shape("square")
+block.shapesize(1, 6, 1)
+block.penup()
+block.goto(235, -260)
+block.tilt(90)
+
 #flippers
 f1 = t.Turtle()
 f1.shape("triangle")
