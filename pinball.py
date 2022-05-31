@@ -1,4 +1,5 @@
 import turtle as t
+from turtle import *
 
 window = t.Screen()
 window.bgcolor("white")
@@ -292,8 +293,9 @@ def flip_right() :
 f1.listen()
 f2.listen()
 
-onkey(flip_left, "Left")
-onkey(flip_right, "Right")
+f1.onkey(flip_left, "Left")
+f2.onkey(flip_right, "Right")
+
 
 
 t.done()
