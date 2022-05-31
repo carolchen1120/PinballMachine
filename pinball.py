@@ -283,6 +283,17 @@ odiamond2.penup()
 odiamond2.goto(-150, 0)
 odiamond2.tilt(45)
 
+def flip_left() :
+  f1.left(45)
+  
+def flip_right() :
+  f2.right(45)
+ 
+f1.listen()
+f2.listen()
+
+onkey(flip_left, "Left")
+onkey(flip_right, "Right")
 
 
 t.done()
