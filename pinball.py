@@ -4,6 +4,8 @@ from turtle import *
 window = t.Screen()
 window.bgcolor("white")
 
+t.tracer(2, 0)
+
 #ball
 ball = t.Turtle()
 ball.shape("circle")
@@ -292,18 +294,45 @@ odiamond2.penup()
 odiamond2.goto(-150, 0)
 odiamond2.tilt(45)
 
-def flip_left() :
-  f1.left(45)
-  
-def flip_right() :
-  f2.right(45)
- 
-f1.listen()
-f2.listen()
 
-f1.onkey(flip_left, "Left")
-f2.onkey(flip_right, "Right")
+t.tracer(1, 1)
 
+#flipper function
+def flip_left():
+    # degree = 45
+    f1.left(45)
+    f1.right(45)
+    # while degree <= 45:
+    #     if f1.left(degree):
+    #         degree = 0
+    #         f1.right(degree)
+
+
+
+def flip_right():
+    f2.right(45)
+    f2.left(45)
+
+
+t.listen()
+
+t.onkey(flip_left, "Left")
+t.onkey(flip_right, "Right")
+
+def pull_down():
+    block.shapesize()
+
+
+def moving_turtle() :
+    while True :
+        for i in range(-130, 96, 2) :
+            oturtle.setx(i)
+        oturtle.left(180)
+        for j in range(95, -131, -2) :
+            oturtle.setx(j)
+        oturtle.left(180)
+
+moving_turtle()
 
 
 t.done()
