@@ -11,6 +11,7 @@ ball = t.Turtle()
 ball.shape("circle")
 ball.penup()
 ball.goto(235, -190)
+ball.vel = 1
 
 #walls
 wall = t.Turtle()
@@ -56,9 +57,12 @@ block.shapesize(1, 6, 1)
 block.penup()
 block.goto(235, -260)
 block.tilt(90)
+block.color('lightgreen')
+block.press = -1
 
 #flippers
 f1 = t.Turtle()
+f1.flip = False
 f1.shape("triangle")
 f1.shapesize(1, 4, 1)
 f1.penup()
@@ -66,6 +70,7 @@ f1.goto(-75, -270)
 f1.tilt(345)
 
 f2 = t.Turtle()
+f2.flip = False
 f2.shape("triangle")
 f2.shapesize(1, 4, 1)
 f2.penup()
@@ -232,14 +237,6 @@ owall14.penup()
 owall14.goto(-230, 170)
 owall14.tilt(150)
 
-#obstacles:walking turtle
-oturtle = t.Turtle()
-oturtle.shape("turtle")
-oturtle.shapesize(1.25, 1.25, 1.25)
-oturtle.penup()
-oturtle.goto(-15, -55)
-#IMPORTANT!!! PROGRAM THE TURTLE SO THAT IT MOVES FROM X-AXIS -130 -> 70
-
 #obstacle-circles
 ocircle1 = t.Turtle()
 ocircle1.shape("circle")
@@ -297,43 +294,85 @@ odiamond2.tilt(45)
 
 t.tracer(1, 1)
 
+
 #flipper function
 def flip_left():
-    # degree = 45
-    f1.left(45)
-    f1.right(45)
-    # while degree <= 45:
-    #     if f1.left(degree):
-    #         degree = 0
-    #         f1.right(degree)
+    if not f1.flip:
+        f1.flip = True
+        f1.left(45)
+        f1.right(45)
+        f1.flip = False
 
 
 
 def flip_right():
-    f2.right(45)
-    f2.left(45)
+    if not f2.flip:
+        f2.flip = True
+        f2.right(45)
+        f2.left(45)
+        f2.flip = False
+
+
+def pull_down():
+    block.press += 1
+    if block.press == 0:
+        block.color('yellow')
+        ball.vel = 4
+    elif block.press == 1:
+        block.color('orange')
+        ball.vel = 6
+    elif block.press == 2:
+        block.color('red')
+        ball.vel = 10
+
+
+def launch():
+    while True:
+        ball.right(90)
+        if ball.xcor() == 235 and ball.ycor() < 275:
+            for i in range(-190, 276, ball.vel):
+                ball.sety(i)
+        if ball.ycor() == 275:
+            break
 
 
 t.listen()
 
 t.onkey(flip_left, "Left")
 t.onkey(flip_right, "Right")
+t.onkey(pull_down, 'space')
+t.onkey(launch, 'l')
 
-def pull_down():
-    block.shapesize()
 
 
-def moving_turtle() :
-    while True :
-        for i in range(-130, 96, 2) :
-            oturtle.setx(i)
-        oturtle.left(180)
-        for j in range(95, -131, -2) :
-            oturtle.setx(j)
-        oturtle.left(180)
 
-moving_turtle()
-
+# def rounded_rectangle(turtle, short, long, radius):
+# #     diameter = radius * 2
+# #
+# #     heading = turtle.heading()
+# #     turtle.setheading(270)
+# #
+# #     isdown = turtle.isdown()
+# #     if isdown:
+# #         turtle.penup()
+# #
+# #     turtle.goto(turtle.xcor() - long/2, turtle.ycor() - short/2 + radius)
+# #
+# #     turtle.pendown()
+# #
+# #     for _ in range(2):
+# #         turtle.circle(radius, 90)
+# #         turtle.forward(long - diameter)
+# #         turtle.circle(radius, 90)
+# #         turtle.forward(short - diameter)
+# #
+# #     turtle.penup()  # restore turtle state, position and heading
+# #     turtle.goto(turtle.xcor() + long/2, turtle.ycor() + short/2 - radius)
+# #     if isdown:
+# #         turtle.pendown()
+# #     turtle.setheading(heading)
+# #
+# # exam = t.Turtle()
+# # rounded_rectangle(exam, 60, 90, 10)
 
 t.done()
-
