@@ -3,6 +3,7 @@ from turtle import *
 
 window = t.Screen()
 window.bgcolor("white")
+window.angle = 10
 
 t.tracer(2, 0)
 
@@ -329,11 +330,20 @@ def pull_down():
 def launch():
     while True:
         ball.right(90)
-        if ball.xcor() == 235 and ball.ycor() < 275:
-            for i in range(-190, 276, ball.vel):
+        if ball.xcor() == 235 and ball.ycor() < 210:
+            for i in range(-190, 220, ball.vel):
                 ball.sety(i)
-        if ball.ycor() == 275:
-            break
+        elif ball.xcor() == 235 and ball.ycor() > 210:
+            move_circle()
+
+def move_circle() :
+    ball.right(90)
+    ball.circle(60, 90)
+    free_fall()
+
+def free_fall():
+    gravity = 9.81 * window.angle
+    new_vel = 
 
 
 t.listen()
