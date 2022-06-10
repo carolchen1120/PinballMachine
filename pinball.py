@@ -358,7 +358,7 @@ def move_circle() :
 
     
 def free_fall():
-    g = -1 * math.cos(window.angle)
+    g = -1 * math.cos(window.angle * math.pi / 180)
     ball.t += 1
     x = ball.t
     ball.yvel += g * 0.25     # change in y vel = accel * time interval
