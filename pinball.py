@@ -2,6 +2,7 @@ import turtle as t
 from turtle import *
 
 window = t.Screen()
+window.title("Pinball Machine")
 window.bgcolor("white")
 window.angle = 10
 
