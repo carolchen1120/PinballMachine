@@ -384,7 +384,23 @@ while True:
         writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
     
     
+
     
+# # Paddle ball collision for a 2 player pong game
+#     if (hit_ball.xcor() > 360 and
+#                         hit_ball.xcor() < 370) and
+#                         (hit_ball.ycor() < right_pad.ycor()+40 and
+#                         hit_ball.ycor() > right_pad.ycor()-40):
+#         hit_ball.setx(360)
+#         hit_ball.dx*=-1
+        
+#     if (hit_ball.xcor()<-360 and
+#                        hit_ball.xcor()>-370) and
+#                        (hit_ball.ycor()<left_pad.ycor()+40 and
+#                         hit_ball.ycor()>left_pad.ycor()-40):
+#         hit_ball.setx(-360)
+#         hit_ball.dx*=-1
+        
 
 # # Gravity code
 # # setup variables for time, x step, gravity, initial velocity 
