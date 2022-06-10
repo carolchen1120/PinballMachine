@@ -6,6 +6,15 @@ window.title("Pinball Machine")
 window.bgcolor("white")
 window.angle = 10
 
+#write score
+writer = t.Turtle()
+writer.speed(0)
+writer.color("blue")
+writer.penup()
+writer.hideturtle()
+writer.goto(0, 320)
+writer.write("Score = 0      High Score = 0", align = "center", font=("Courier", 24, "normal"))
+
 t.tracer(2, 0)
 
 #ball
@@ -14,6 +23,7 @@ ball.shape("circle")
 ball.penup()
 ball.goto(235, -190)
 ball.vel = 1
+ball.score = 0
 
 #walls
 wall = t.Turtle()
@@ -355,7 +365,14 @@ t.onkey(pull_down, 'space')
 t.onkey(launch, 'l')
 
 
-
+while True:
+    window.update()
+    
+    if ball.xcor() < -250 or ball.xcor() > 250 or ball.ycor() < -320 or ball.ycor() > 290 :
+        ball.goto(235, -190)
+        writer.clear()
+        writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
+    
 
 # def rounded_rectangle(turtle, short, long, radius):
 # #     diameter = radius * 2
