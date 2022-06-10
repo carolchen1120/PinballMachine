@@ -24,6 +24,7 @@ ball.penup()
 ball.goto(235, -190)
 ball.vel = 1
 ball.score = 0
+ball.y_vel = 1
 
 #walls
 wall = t.Turtle()
@@ -347,14 +348,16 @@ def launch():
         elif ball.xcor() == 235 and ball.ycor() > 210:
             move_circle()
 
+            
 def move_circle() :
     ball.right(90)
     ball.circle(60, 90)
     free_fall()
 
+    
 def free_fall():
-    gravity = 9.81 * window.angle
-    new_vel = 
+    gravity = -1 * window.angle
+    ball.y_vel += gravity
 
 
 t.listen()
@@ -368,12 +371,53 @@ t.onkey(launch, 'l')
 while True:
     window.update()
     
-    if ball.xcor() < -250 or ball.xcor() > 250 or ball.ycor() < -320 or ball.ycor() > 290 :
+    if ball.ycor() < -290 :
         ball.goto(235, -190)
         writer.clear()
         writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
     
+    #let ball move
+    
 
+# # Gravity code
+# # setup variables for time, x step, gravity, initial velocity 
+# t=0
+# tstep = 0.25    # seconds   
+# delx = 2        # uniform motion in x axis 
+# g = -1          # fixed accel (downwards) 
+# yvel = 20       # initial vel in y 
+# y=0             # y position 
+
+# # draw a cliff that the ball can be thrown from 
+# penup()
+# goto(-100,0)
+# pendown()
+# color("green")
+# forward(150)
+# right(90)
+# forward(100)
+# penup()
+# goto(0,0)
+
+# pendown()
+# color("blue")
+
+# print("run the simulation for 50 seconds ")
+# # main loop -- uniform motion in x and acceleration in y axis 
+# while (t<50):
+#     t=t+tstep
+#     x=t*delx
+#     yvel = yvel + g * tstep     # change in y vel = accel * time interval
+#     y=y + yvel * tstep          # change in y posn = vel + time interval 
+    
+#     goto(x,y)
+#     dot(2, "blue")              # draw dot at current position 
+
+# print("final y position is " + str(y) + " m")
+
+
+
+    
 # def rounded_rectangle(turtle, short, long, radius):
 # #     diameter = radius * 2
 # #
