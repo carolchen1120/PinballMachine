@@ -1,5 +1,6 @@
 import turtle as t
 from turtle import *
+import math
 
 window = t.Screen()
 window.title("Pinball Machine")
@@ -24,7 +25,8 @@ ball.penup()
 ball.goto(235, -190)
 ball.vel = 1
 ball.score = 0
-ball.y_vel = 1
+ball.yvel = 1
+ball.t = 0
 
 #walls
 wall = t.Turtle()
@@ -356,8 +358,13 @@ def move_circle() :
 
     
 def free_fall():
-    gravity = -1 * window.angle
-    ball.y_vel += gravity
+    g = -1 * math.cos(window.angle)
+    ball.t += 1
+    x = ball.t
+    ball.yvel += g * 0.25     # change in y vel = accel * time interval
+    y += ball.yvel * 0.25          # change in y posn = vel + time interval 
+    
+    ball.goto(x, y)
 
 
 t.listen()
@@ -376,7 +383,7 @@ while True:
         writer.clear()
         writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
     
-    #let ball move
+    
     
 
 # # Gravity code
