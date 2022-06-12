@@ -354,16 +354,19 @@ def launch():
 def move_circle() :
     ball.right(90)
     ball.circle(60, 90)
-    free_fall()
+    while True:
+        if ball.ycor() > -290 :
+            free_fall()
+        else :
+            break
 
     
 def free_fall():
     g = -1 * math.cos(window.angle * math.pi / 180)
-    ball.t += 1
-    x = ball.t
+    x = 0
     ball.yvel += g * 0.25     # change in y vel = accel * time interval
+    y = ball.ycor()
     y += ball.yvel * 0.25          # change in y posn = vel + time interval 
-    
     ball.goto(x, y)
 
 
@@ -377,7 +380,7 @@ t.onkey(launch, 'l')
 
 while True:
     window.update()
-    
+
     if ball.ycor() < -290 :
         ball.goto(235, -190)
         writer.clear()
