@@ -393,14 +393,20 @@ rect_cors = [[-145 + 50, -145 - 50, -220 - 9, -220 + 9], [115 + 50, 115 - 50, -2
 
 
 def collision_vert(rect) :
-    return (ball.xcor() <= rect[1] and ball.xcor() >= rect[0] and ball.ycor() <= rect[3] and ball.ycor() >= rect[2])
-
+    if ball.xcor() <= rect[1] or ball.xcor() >= rect[0] :
+        ball.dy *= -1
+    elif ball.ycor() <= rect[3] or ball.ycor() >= rect[2] :
+        ball.dx *= -1
 
 def collision_45(rect) :
     new_x = (ball.xcor() + ball.ycor()) / math.sqrt(2)
     new_y = (ball.xcor() - ball.ycor()) / math.sqrt(2)
-    return (new_x <= rect[1] and new_x >= rect[0] and new_y <= rect[3] and new_y >= rect[2])
-
+    if new_x <= rect[1] or new_x >= rect[0] :
+        new_y *= -1
+    elif new_y <= rect[3] or new_y >= rect[2] :
+        new_x *= -1
+    ball.dx = (new_x + new_y) / math.sqrt(2)
+    ball.dy = (new_x - new_y) / math.sqrt(2)
 
 t.listen()
 
@@ -412,8 +418,14 @@ t.onkey(launch, 'l')
 
 def tick() :
     if ball.xcor() > -250 and ball.xcor() < 250 and ball.ycor() > -320 and ball.ycor() < 292 and ball.free == True :
-        # free_fall()
-        black_collision()
+        for rect in rect45_cors :
+            collision_45(rect)
+
+        for rect in rect_cors :
+            collision_vert(rect)
+
+        free_fall()
+        
         ball.sety(ball.ycor() + ball.dy)
         ball.setx(ball.xcor() + ball.dx)
         writer.clear()
