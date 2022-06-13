@@ -1,7 +1,7 @@
 import turtle as t
 from turtle import *
 import math
-import time
+import random
 
 window = t.Screen()
 window.title("Pinball Machine")
@@ -18,9 +18,10 @@ ball.goto(235, -190)
 ball.vel = 1
 ball.score = 0
 ball.yvel = 1
-ball.dx = 0
+ball.dx = random.randrange(-3, 3)
 ball.dy = 1
 ball.free = False
+ball.secs = 0
 
 #write score
 writer = t.Turtle()
@@ -434,11 +435,12 @@ def black_collision() :
         ball.dx *= -1
     else :
         g = -1 * math.cos(window.angle * math.pi / 180)
-        x = ball.dx
+        x = ball.dx * ball.secs
         ball.dy += g * 0.5     # change in y vel = accel * time interval
         y = ball.ycor()
         y += ball.dy * 0.5       # change in y posn = vel + time interval 
         ball.goto(x, y)
+        ball.secs += 1
 
 
 # SPECIAL OBSTACLES
@@ -467,7 +469,7 @@ t.onkey(launch, 'l')
 
 
 def tick() :
-    if ball.xcor() > -250 and ball.xcor() < 250 and ball.ycor() > -320 and ball.ycor() < 290 and ball.free == True :
+    if ball.xcor() > -250 and ball.xcor() < 250 and ball.ycor() > -320 and ball.ycor() < 292 and ball.free == True :
         # free_fall()
         black_collision()
         ball.sety(ball.ycor() + ball.dy)
