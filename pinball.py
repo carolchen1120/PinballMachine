@@ -138,21 +138,6 @@ fwall4.penup()
 fwall4.goto(152.5, -130)
 fwall4.tilt(90)
 
-#bottom triangles
-btri1 = t.Turtle()
-btri1.shape("triangle")
-btri1.shapesize(7, 2, 1)
-btri1.penup()
-btri1.goto(-125, -155)
-btri1.tilt(205)
-
-btri2 = t.Turtle()
-btri2.shape("triangle")
-btri2.shapesize(7, 2, 1)
-btri2.penup()
-btri2.goto(95, -155)
-btri2.tilt(335)
-
 #obstacles-rectangles
 owall1 = t.Turtle()
 owall1.shape("square")
