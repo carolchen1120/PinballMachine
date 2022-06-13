@@ -26,7 +26,19 @@ ball.goto(235, -190)
 ball.vel = 1
 ball.score = 0
 ball.yvel = 1
-ball.t = 0
+ball.dx = 0
+ball.dy = 1
+ball.free = False
+
+#launcher
+block = t.Turtle()
+block.shape("square")
+block.shapesize(1, 6, 1)
+block.penup()
+block.goto(235, -260)
+block.tilt(90)
+block.color('lightgreen')
+block.press = -1
 
 #walls
 wall = t.Turtle()
@@ -64,16 +76,6 @@ wall.penup()
 wall.goto(220, -230)
 wall.pendown()
 wall.goto(130, -320)
-
-#launcher
-block = t.Turtle()
-block.shape("square")
-block.shapesize(1, 6, 1)
-block.penup()
-block.goto(235, -260)
-block.tilt(90)
-block.color('lightgreen')
-block.press = -1
 
 #flippers
 f1 = t.Turtle()
@@ -249,7 +251,7 @@ owall14 = t.Turtle()
 owall14.shape("square")
 owall14.shapesize(.8, 2, 1)
 owall14.penup()
-owall14.goto(-242, 170)
+owall14.goto(-230, 170)
 owall14.tilt(135)
 
 #obstacle-circles
@@ -338,7 +340,7 @@ def pull_down():
         ball.vel = 6
     elif block.press == 2:
         block.color('red')
-        ball.vel = 10
+        ball.vel = 9
 
 
 def launch():
@@ -349,25 +351,128 @@ def launch():
                 ball.sety(i)
         elif ball.xcor() == 235 and ball.ycor() > 210:
             move_circle()
+            ball.free = True
 
             
 def move_circle() :
     ball.right(90)
     ball.circle(60, 90)
-    while True:
-        if ball.ycor() > -290 :
-            free_fall()
-        else :
-            break
+    ball.goto(0, ball.ycor())
+    # while True:
+    #     if ball.ycor() > -290 :
+    #         black_collision()
+    #         free_fall()
+    #         ball.free = True
+    #     else :
+    #         break
 
     
 def free_fall():
     g = -1 * math.cos(window.angle * math.pi / 180)
-    x = 0
-    ball.yvel += g * 0.25     # change in y vel = accel * time interval
+    x = ball.dx
+    ball.dy += g * 0.25     # change in y vel = accel * time interval
     y = ball.ycor()
-    y += ball.yvel * 0.25          # change in y posn = vel + time interval 
+    y += ball.dy * 0.25          # change in y posn = vel + time interval 
     ball.goto(x, y)
+
+
+def black_collision() :
+    cors_a = ball.xcor() + ball.ycor() # sum of coordinates of ball's center
+    cors_s = ball.ycor() - ball.xcor() # difference of coordinates of ball's center
+    # circle obstacles
+    if abs(ball.xcor() - ocircle1.xcor()) <= 22.5 and abs(ball.ycor() - ocircle1.ycor()) <= 22.5 :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    elif abs(ball.xcor() - ocircle2.xcor()) <= 22.5 and abs(ball.ycor() - ocircle2.ycor()) <= 22.5 :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    elif abs(ball.xcor() - ocircle3.xcor()) <= 40 and abs(ball.ycor() - ocircle3.ycor()) <= 40 :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    elif abs(ball.xcor() - ocircle4.xcor()) <= 37.5 and abs(ball.ycor() - ocircle4.ycor()) <= 37.5 :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # rectangle obstacles
+    # owall3 and owall5
+    elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
+                            (cors_a >= 170-2*math.sqrt(25)) and (cors_a <= 170+2*math.sqrt(25))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+        # need to include red spring action (owall5)
+    # owall4 and owall6
+    elif ((cors_s <= 50+2*math.sqrt(25)) and (cors_s >= 50-2*math.sqrt(25)) and
+                            (cors_a >= 250-2*math.sqrt(8)) and (cors_a <= 250+2*math.sqrt(8))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+        # need to include red spring action (owall4)
+    # need to include red spring for owall7
+    # owall8
+    elif ((cors_s <= 243+2*math.sqrt(8)) and (cors_s >= 243-2*math.sqrt(8)) and
+                            (cors_a >= -150-2*math.sqrt(25)) and (cors_a <= -150+2*math.sqrt(25))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # owall9
+    elif ((cors_s <= 110+2*math.sqrt(20)) and (cors_s >= 110-2*math.sqrt(20)) and
+                            (cors_a >= 20-2*math.sqrt(8)) and (cors_a <= 20+2*math.sqrt(8))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # owall10
+    elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
+                            (cors_a >= -10-2*math.sqrt(30)) and (cors_a <= -10+2*math.sqrt(30))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # need to include red spring for owall11
+    # owall12
+    elif ((cors_s <= -117+2*math.sqrt(8)) and (cors_s >= -117-2*math.sqrt(8)) and
+                            (cors_a >= 87-2*math.sqrt(22.5)) and (cors_a <= 87+2*math.sqrt(22.5))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # owall13
+    elif ((cors_s <= -130+2*math.sqrt(22.5)) and (cors_s >= -130-2*math.sqrt(22.5)) and
+                            (cors_a >= 110-2*math.sqrt(8)) and (cors_a <= 110+2*math.sqrt(8))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    # owall14
+    elif ((cors_s <= 400+2*math.sqrt(20)) and (cors_s >= 400-2*math.sqrt(20)) and
+                            (cors_a >= 60-2*math.sqrt(8)) and (cors_a <= 60+2*math.sqrt(8))) :
+        ball.goto(0,0)
+        ball.dy *= -1
+        ball.dx *= -1
+    else :
+        g = -1 * math.cos(window.angle * math.pi / 180)
+        x = ball.dx
+        ball.dy += g * 0.25     # change in y vel = accel * time interval
+        y = ball.ycor()
+        y += ball.dy * 0.25          # change in y posn = vel + time interval 
+        ball.goto(x, y)
+
+
+# SPECIAL OBSTACLES
+# owall1 = t.Turtle()
+# owall1.shape("square")
+# owall1.shapesize(.8, 4, 1)
+# owall1.penup()
+# owall1.goto(-90, 170)
+# owall1.tilt(45)
+
+# owall2 = t.Turtle()
+# owall2.shape("square")
+# owall2.shapesize(.8, 2, 1)
+# owall2.penup()
+# owall2.goto(-95, 131)
+# owall2.tilt(135)
+
 
 
 t.listen()
@@ -378,15 +483,25 @@ t.onkey(pull_down, 'space')
 t.onkey(launch, 'l')
 
 
-while True:
-    window.update()
+def tick() :
+    
 
     if ball.ycor() < -290 :
         ball.goto(235, -190)
         writer.clear()
         writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
     
+    if ball.xcor() >= -250 and ball.xcor() <= 250 and ball.ycor() >= -320 and ball.ycor() <= 290 and ball.free == True :
+        # free_fall()
+        black_collision()
+        ball.sety(ball.ycor() + ball.dy)
+        ball.setx(ball.xcor() + ball.dx)
+
+    window.update()
+    window.ontimer(tick, 60)
     
+tick()
+window.mainloop()
 
     
 # # Paddle ball collision for a 2 player pong game
@@ -473,4 +588,4 @@ while True:
 # # exam = t.Turtle()
 # # rounded_rectangle(exam, 60, 90, 10)
 
-t.done()
+# t.done()
