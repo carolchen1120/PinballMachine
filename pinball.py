@@ -367,93 +367,39 @@ def free_fall():
     y += ball.dy * 0.5          # change in y posn = vel + time interval 
     ball.goto(x, y)
 
-
-def black_collision() :
-    cors_a = ball.xcor() + ball.ycor() # sum of coordinates of ball's center
-    cors_s = ball.ycor() - ball.xcor() # difference of coordinates of ball's center
-    # circle obstacles
-    if abs(ball.xcor() - ocircle1.xcor()) <= 22.5 and abs(ball.ycor() - ocircle1.ycor()) <= 22.5 :
-        ball.dy *= -1
-        ball.dx *= -1
-    elif abs(ball.xcor() - ocircle2.xcor()) <= 22.5 and abs(ball.ycor() - ocircle2.ycor()) <= 22.5 :
-        ball.dy *= -1
-        ball.dx *= -1
-    elif abs(ball.xcor() - ocircle3.xcor()) <= 40 and abs(ball.ycor() - ocircle3.ycor()) <= 40 :
-        ball.dy *= -1
-        ball.dx *= -1
-    elif abs(ball.xcor() - ocircle4.xcor()) <= 37.5 and abs(ball.ycor() - ocircle4.ycor()) <= 37.5 :
-        ball.dy *= -1
-        ball.dx *= -1
-    # rectangle obstacles
-    # owall3 and owall5
-    elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
-                            (cors_a >= 170-2*math.sqrt(25)) and (cors_a <= 170+2*math.sqrt(25))) :
-        ball.dy *= -1
-        ball.dx *= -1
-        # need to include red spring action (owall5)
-    # owall4 and owall6
-    elif ((cors_s <= 50+2*math.sqrt(25)) and (cors_s >= 50-2*math.sqrt(25)) and
-                            (cors_a >= 250-2*math.sqrt(8)) and (cors_a <= 250+2*math.sqrt(8))) :
-        ball.dy *= -1
-        ball.dx *= -1
-        # need to include red spring action (owall4)
-    # need to include red spring for owall7
-    # owall8
-    elif ((cors_s <= 243+2*math.sqrt(8)) and (cors_s >= 243-2*math.sqrt(8)) and
-                            (cors_a >= -150-2*math.sqrt(25)) and (cors_a <= -150+2*math.sqrt(25))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    # owall9
-    elif ((cors_s <= 110+2*math.sqrt(20)) and (cors_s >= 110-2*math.sqrt(20)) and
-                            (cors_a >= 20-2*math.sqrt(8)) and (cors_a <= 20+2*math.sqrt(8))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    # owall10
-    elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
-                            (cors_a >= -10-2*math.sqrt(30)) and (cors_a <= -10+2*math.sqrt(30))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    # need to include red spring for owall11
-    # owall12
-    elif ((cors_s <= -117+2*math.sqrt(8)) and (cors_s >= -117-2*math.sqrt(8)) and
-                            (cors_a >= 87-2*math.sqrt(22.5)) and (cors_a <= 87+2*math.sqrt(22.5))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    # owall13
-    elif ((cors_s <= -130+2*math.sqrt(22.5)) and (cors_s >= -130-2*math.sqrt(22.5)) and
-                            (cors_a >= 110-2*math.sqrt(8)) and (cors_a <= 110+2*math.sqrt(8))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    # owall14
-    elif ((cors_s <= 400+2*math.sqrt(20)) and (cors_s >= 400-2*math.sqrt(20)) and
-                            (cors_a >= 60-2*math.sqrt(8)) and (cors_a <= 60+2*math.sqrt(8))) :
-        ball.dy *= -1
-        ball.dx *= -1
-    else :
-        g = -1 * math.cos(window.angle * math.pi / 180)
-        x = ball.dx * ball.secs
-        ball.dy += g * 0.5     # change in y vel = accel * time interval
-        y = ball.ycor()
-        y += ball.dy * 0.5       # change in y posn = vel + time interval 
-        ball.goto(x, y)
-        ball.secs += 1
+    
+def make45x(x, y) :
+    return (x+y) / math.sqrt(2)
 
 
-# SPECIAL OBSTACLES
-# owall1 = t.Turtle()
-# owall1.shape("square")
-# owall1.shapesize(.8, 4, 1)
-# owall1.penup()
-# owall1.goto(-90, 170)
-# owall1.tilt(45)
+def make45y(x, y) :
+    return (x-y) / math.sqrt(2)
 
-# owall2 = t.Turtle()
-# owall2.shape("square")
-# owall2.shapesize(.8, 2, 1)
-# owall2.penup()
-# owall2.goto(-95, 131)
-# owall2.tilt(135)
 
+rect45_cors = [
+        [make45x(-90, 170) + 8, make45x(-90, 170) - 8, make45y(-90, 170) - 40, make45y(-90, 170) + 40], # owall1
+        [make45x(-95, 131) + 20, make45x(-95, 131) - 20, make45y(-95, 131) - 8, make45y(-95, 131) + 8], # owall2
+        [make45x(20,150) + 8, make45x(20,150) - 8, make45y(20,150) - 25, make45y(20,150) + 25], # owall3
+        [make45x(100,150) + 25, make45x(100,150) - 25, make45y(100,150) - 8, make45y(100,150) + 8], # owall4
+        [make45x(196.5,46.5) + 8, make45x(196.5,46.5) - 8, make45y(196.5,46.5) - 25, make45y(196.5,46.5) + 25], # owall8
+        [make45x(-45, 65) + 20, make45x(-45, 65) - 20, make45y(-45, 65) - 8, make45y(-45, 65) + 8], # owall9
+        [make45x(-70, 60) + 8, make45x(-70, 60) - 8, make45y(-70, 60) - 30, make45y(-70, 60) + 30], # owall10
+        [make45x(97, -10) + 8, make45x(97, -10) - 8, make45y(97, -10) - 22.5, make45y(97, -10) + 22.5], # owall12
+        [make45x(120, -10) + 22.5, make45x(120, -10) - 22.5, make45y(120, -10) - 8, make45y(120, -10) + 8], # owall13
+        [make45x(-231, 171) + 20, make45x(-231, 171) - 20, make45y(-231, 171) - 8, make45y(-231, 171) + 8] # owall14
+    ]
+
+rect_cors = [[-145 + 50, -145 - 50, -220 - 9, -220 + 9], [115 + 50, 115 - 50, -220 - 9, -220 + 9]]
+
+
+def collision_vert(rect) :
+    return (ball.xcor() <= rect[1] and ball.xcor() >= rect[0] and ball.ycor() <= rect[3] and ball.ycor() >= rect[2])
+
+
+def collision_45(rect) :
+    new_x = (ball.xcor() + ball.ycor()) / math.sqrt(2)
+    new_y = (ball.xcor() - ball.ycor()) / math.sqrt(2)
+    return (new_x <= rect[1] and new_x >= rect[0] and new_y <= rect[3] and new_y >= rect[2])
 
 
 t.listen()
