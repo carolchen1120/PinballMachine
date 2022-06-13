@@ -78,19 +78,32 @@ wall.goto(130, -320)
 #flippers
 f1 = t.Turtle()
 f1.flip = False
-f1.shape("triangle")
-f1.shapesize(1, 4, 1)
+f1.shape("square")
+f1.shapesize(.5, 3.25, 1)
 f1.penup()
+#Default position is
 f1.goto(-75, -270)
 f1.tilt(345)
+#Flat position is
+# f1.goto(-65, -263)
+#45% tilt is
+# f1.goto(-75, -238)
+# f1.tilt(45)
+
 
 f2 = t.Turtle()
 f2.flip = False
-f2.shape("triangle")
-f2.shapesize(1, 4, 1)
+f2.shape("square")
+f2.shapesize(.5, 3.25, 1)
 f2.penup()
-f2.goto(45, -270)
+#Default position is
+f2.goto(35, -273)
 f2.tilt(195)
+#Flat position is
+# f2.goto(35, -263)
+#45% tilt is
+# f2.goto(45, -238)
+# f2.tilt(135)
 
 #pivots
 piv1 = t.Turtle()
