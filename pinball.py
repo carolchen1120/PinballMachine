@@ -64,10 +64,6 @@ wall.goto(250, 200)
 wall.left(90)
 wall.pendown()
 wall.circle(90, 90)
-wall.penup()
-wall.goto(-160, 290)
-wall.pendown()
-wall.circle(90, 90)
 
 #triangle
 wall.penup()
