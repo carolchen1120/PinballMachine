@@ -249,8 +249,8 @@ owall14 = t.Turtle()
 owall14.shape("square")
 owall14.shapesize(.8, 2, 1)
 owall14.penup()
-owall14.goto(-230, 170)
-owall14.tilt(150)
+owall14.goto(-242, 170)
+owall14.tilt(135)
 
 #obstacle-circles
 ocircle1 = t.Turtle()
