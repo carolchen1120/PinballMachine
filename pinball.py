@@ -253,7 +253,7 @@ owall14 = t.Turtle()
 owall14.shape("square")
 owall14.shapesize(.8, 2, 1)
 owall14.penup()
-owall14.goto(-230, 170)
+owall14.goto(-231, 171)
 owall14.tilt(135)
 
 #obstacle-circles
@@ -291,9 +291,9 @@ otriangle1.tilt(180)
 
 otriangle2 = t.Turtle()
 otriangle2.shape("triangle")
-otriangle2.shapesize(.7, .7, 1)
+otriangle2.shapesize(.95, .55, 1)
 otriangle2.penup()
-otriangle2.goto(-245, 183)
+otriangle2.goto(-245, 191)
 
 #obstacle-diamond
 odiamond1 = t.Turtle()
