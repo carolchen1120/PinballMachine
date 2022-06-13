@@ -1,20 +1,12 @@
 import turtle as t
 from turtle import *
 import math
+import time
 
 window = t.Screen()
 window.title("Pinball Machine")
 window.bgcolor("white")
 window.angle = 10
-
-#write score
-writer = t.Turtle()
-writer.speed(0)
-writer.color("blue")
-writer.penup()
-writer.hideturtle()
-writer.goto(0, 320)
-writer.write("Score = 0      High Score = 0", align = "center", font=("Courier", 24, "normal"))
 
 t.tracer(2, 0)
 
@@ -29,6 +21,15 @@ ball.yvel = 1
 ball.dx = 0
 ball.dy = 1
 ball.free = False
+
+#write score
+writer = t.Turtle()
+writer.speed(0)
+writer.color("blue")
+writer.penup()
+writer.hideturtle()
+writer.goto(0, 300)
+writer.write(f'Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
 
 #launcher
 block = t.Turtle()
@@ -352,27 +353,21 @@ def launch():
         elif ball.xcor() == 235 and ball.ycor() > 210:
             move_circle()
             ball.free = True
+            ball.dy = -ball.vel
 
             
 def move_circle() :
     ball.right(90)
     ball.circle(60, 90)
     ball.goto(0, ball.ycor())
-    # while True:
-    #     if ball.ycor() > -290 :
-    #         black_collision()
-    #         free_fall()
-    #         ball.free = True
-    #     else :
-    #         break
 
     
 def free_fall():
-    g = -1 * math.cos(window.angle * math.pi / 180)
+    g = -5 * math.cos(window.angle * math.pi / 180)
     x = ball.dx
-    ball.dy += g * 0.25     # change in y vel = accel * time interval
+    ball.dy += g * 0.5     # change in y vel = accel * time interval
     y = ball.ycor()
-    y += ball.dy * 0.25          # change in y posn = vel + time interval 
+    y += ball.dy * 0.5          # change in y posn = vel + time interval 
     ball.goto(x, y)
 
 
@@ -381,33 +376,27 @@ def black_collision() :
     cors_s = ball.ycor() - ball.xcor() # difference of coordinates of ball's center
     # circle obstacles
     if abs(ball.xcor() - ocircle1.xcor()) <= 22.5 and abs(ball.ycor() - ocircle1.ycor()) <= 22.5 :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     elif abs(ball.xcor() - ocircle2.xcor()) <= 22.5 and abs(ball.ycor() - ocircle2.ycor()) <= 22.5 :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     elif abs(ball.xcor() - ocircle3.xcor()) <= 40 and abs(ball.ycor() - ocircle3.ycor()) <= 40 :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     elif abs(ball.xcor() - ocircle4.xcor()) <= 37.5 and abs(ball.ycor() - ocircle4.ycor()) <= 37.5 :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # rectangle obstacles
     # owall3 and owall5
     elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
                             (cors_a >= 170-2*math.sqrt(25)) and (cors_a <= 170+2*math.sqrt(25))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
         # need to include red spring action (owall5)
     # owall4 and owall6
     elif ((cors_s <= 50+2*math.sqrt(25)) and (cors_s >= 50-2*math.sqrt(25)) and
                             (cors_a >= 250-2*math.sqrt(8)) and (cors_a <= 250+2*math.sqrt(8))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
         # need to include red spring action (owall4)
@@ -415,46 +404,40 @@ def black_collision() :
     # owall8
     elif ((cors_s <= 243+2*math.sqrt(8)) and (cors_s >= 243-2*math.sqrt(8)) and
                             (cors_a >= -150-2*math.sqrt(25)) and (cors_a <= -150+2*math.sqrt(25))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # owall9
     elif ((cors_s <= 110+2*math.sqrt(20)) and (cors_s >= 110-2*math.sqrt(20)) and
                             (cors_a >= 20-2*math.sqrt(8)) and (cors_a <= 20+2*math.sqrt(8))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # owall10
     elif ((cors_s <= 130+2*math.sqrt(8)) and (cors_s >= 130-2*math.sqrt(8)) and
                             (cors_a >= -10-2*math.sqrt(30)) and (cors_a <= -10+2*math.sqrt(30))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # need to include red spring for owall11
     # owall12
     elif ((cors_s <= -117+2*math.sqrt(8)) and (cors_s >= -117-2*math.sqrt(8)) and
                             (cors_a >= 87-2*math.sqrt(22.5)) and (cors_a <= 87+2*math.sqrt(22.5))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # owall13
     elif ((cors_s <= -130+2*math.sqrt(22.5)) and (cors_s >= -130-2*math.sqrt(22.5)) and
                             (cors_a >= 110-2*math.sqrt(8)) and (cors_a <= 110+2*math.sqrt(8))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     # owall14
     elif ((cors_s <= 400+2*math.sqrt(20)) and (cors_s >= 400-2*math.sqrt(20)) and
                             (cors_a >= 60-2*math.sqrt(8)) and (cors_a <= 60+2*math.sqrt(8))) :
-        ball.goto(0,0)
         ball.dy *= -1
         ball.dx *= -1
     else :
         g = -1 * math.cos(window.angle * math.pi / 180)
         x = ball.dx
-        ball.dy += g * 0.25     # change in y vel = accel * time interval
+        ball.dy += g * 0.5     # change in y vel = accel * time interval
         y = ball.ycor()
-        y += ball.dy * 0.25          # change in y posn = vel + time interval 
+        y += ball.dy * 0.5       # change in y posn = vel + time interval 
         ball.goto(x, y)
 
 
@@ -484,40 +467,30 @@ t.onkey(launch, 'l')
 
 
 def tick() :
-    
-
-    if ball.ycor() < -290 :
-        ball.goto(235, -190)
-        writer.clear()
-        writer.write(f'Score = 0      High Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
-    
-    if ball.xcor() >= -250 and ball.xcor() <= 250 and ball.ycor() >= -320 and ball.ycor() <= 290 and ball.free == True :
+    if ball.xcor() > -250 and ball.xcor() < 250 and ball.ycor() > -320 and ball.ycor() < 290 and ball.free == True :
         # free_fall()
         black_collision()
         ball.sety(ball.ycor() + ball.dy)
         ball.setx(ball.xcor() + ball.dx)
+        writer.clear()
+        writer.write(f'Score = {ball.score}', align = "center", font=("Courier", 24, "normal"))
+
+    if ball.ycor() < -290 :
+        t.clearscreen()
+        new_write = t.Turtle()
+        new_write.speed(0)
+        new_write.color("blue")
+        new_write.penup()
+        new_write.hideturtle()
+        new_write.write(f'Your score was {ball.score}. Thank you for playing!', align = "center", font=("Courier", 24, "normal"))
+        t.delay(100)
+        return True
 
     window.update()
     window.ontimer(tick, 60)
     
 tick()
 window.mainloop()
-
-    
-# # Paddle ball collision for a 2 player pong game
-#     if (hit_ball.xcor() > 360 and
-#                         hit_ball.xcor() < 370) and
-#                         (hit_ball.ycor() < right_pad.ycor()+40 and
-#                         hit_ball.ycor() > right_pad.ycor()-40):
-#         hit_ball.setx(360)
-#         hit_ball.dx*=-1
-        
-#     if (hit_ball.xcor()<-360 and
-#                        hit_ball.xcor()>-370) and
-#                        (hit_ball.ycor()<left_pad.ycor()+40 and
-#                         hit_ball.ycor()>left_pad.ycor()-40):
-#         hit_ball.setx(-360)
-#         hit_ball.dx*=-1
         
 
 # # Gravity code
