@@ -213,7 +213,7 @@ owall9 = t.Turtle()
 owall9.shape("square")
 owall9.shapesize(.8, 2, 1)
 owall9.penup()
-owall9.goto(-32, 65)
+owall9.goto(-45, 65)
 owall9.tilt(135)
 
 owall10 = t.Turtle()
